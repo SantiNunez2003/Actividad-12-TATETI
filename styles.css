@@ -1,0 +1,35 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.botones{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+table{
+    width: 400px;
+    height: 400px;
+}
+
+td {
+    width: 40px;
+    border: 2px solid black; 
+    text-align: center; 
+    font-size: 48px; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+tr {
+    height: 30%; 
+}
+
