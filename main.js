@@ -28,7 +28,7 @@ celdas.forEach((celda) => {
         if(typeof posicionGanador === "object"){
 
             //Agregamos al h2 el jugador que gano
-            resultado.innerHTML = ("Juego finalizado, GANO: "+ turno);
+            resultado.innerHTML = ("Juego finalizado, GANO: "+ turno +"!!");
 
             //Llamamos a la funcion ganador para que se asigne el estilo ganador 
             ganador(posicionGanador);
@@ -48,7 +48,6 @@ celdas.forEach((celda) => {
             jugarOtraVez();
             return;
         }
-        //PROPIEDAD LOCATION
 
         //Intercalamos los tunos
         if(turno === "X"){turno = "O"}else{turno = "X"};
@@ -115,7 +114,7 @@ function jugarOtraVez(){
     //Ponemos un temoporizador de 2seg para volver a jugar
     setTimeout(() => {
         //Vaciamos el resultado
-        resultado.innerHTML = "",
+        resultado.innerHTML = "Juguemos otra vez!! Eres X",
 
         //Asignamos el turno
         turno = "X",
