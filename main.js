@@ -1,39 +1,64 @@
 const jugadorX = "X";
 const jugadorO = "O";
-let turno = "1";
-
+let turno = "X";
 
 //Traemos todos los elementos con el la clase celda
-const celdas = document.querySelectorAll(".celda");
+const celdas = Array.from(document.querySelectorAll(".celda"));
+
+//Traemos el h2 en el cual se expresa el resultado
+const resultado = document.getElementById("ganador");
 
 //Agregamos para cada uno de esos elementos un EventListener 
 celdas.forEach((celda) => {
     celda.addEventListener("click" , () => {
+        
         //Si el turno es finalizado se termina todo el juego 
         if(turno === "FINALIZADO") return;
+
+        //Si la celda es indistinta a vacio, se puede jugar
         if(celda.innerHTML !== "") return;
+
         //Dependiendo del turno se agregara un valor u otro en la tabla
-        if(turno === "1"){celda.innerHTML = jugadorX }else{celda.innerHTML = jugadorO };
-        //Intercalamos los tunos
-        if(turno === "1"){turno = "2"}else{turno = "1"};
+        if(turno === "X"){celda.innerHTML = jugadorX }else{celda.innerHTML = jugadorO };
+        
         //Despues de cada movimineto(click) revisamos si hay algun ganado
         const posicionGanador = revisarGanador();
 
+        //Manejamos lo que devuelve la funcion revisarGanador()
         if(typeof posicionGanador === "object"){
+
+            //Agregamos al h2 el jugador que gano
+            resultado.innerHTML = ("Juego finalizado, GANO: "+ turno);
+
+            //Llamamos a la funcion ganador para que se asigne el estilo ganador 
             ganador(posicionGanador);
+            
+             //Llamos la funcion jugarOtraVez
+            jugarOtraVez();
             return;
         }
+
+        //Manejamos el empate
         if(posicionGanador === "EMPATE"){
-            
+    
+            //Mostramos en el h2 que se empato
+            resultado.innerHTML = ("Se empato, vamos a jugar otra vez.. ");
+           
+            //Llamos la funcion jugarOtraVez
+            jugarOtraVez();
+            return;
         }
+        //PROPIEDAD LOCATION
+
+        //Intercalamos los tunos
+        if(turno === "X"){turno = "O"}else{turno = "X"};
     })
 })
 
 //Funcion para revisar si hay algun ganador
 function revisarGanador(){
     //tranformamos los elementos de clase celda a un Array con los valores que tiene dentro
-    const tablero = Array.from(celdas).map(cuadrado  => cuadrado.innerHTML);
-    console.log(tablero)
+    const tablero = (celdas).map(cuadrado  => cuadrado.innerHTML);
 
     //Revisamos si hay ganador en Horizontal
     //Con el for recorremos todas las filas aumentanto
@@ -73,14 +98,32 @@ function revisarGanador(){
     
     //Revisamos si todavia hay lugares para jugar 
     if(tablero.includes("")) return;
-    return "EMPATE"
-    
+    return "EMPATE"   
 };
 
+//Funcion que colorea las celdas de la posicion ganadora
 function ganador(posicionGanadora){
     turno = "FINALIZADO"
-    console.log("gano", posicionGanadora);
+
     posicionGanadora.forEach(pisicon => {
         celdas[pisicon].classList.add("ganador")
     })
+};
+
+//Funcion que vacia todas las celdas, saca el estilo, aigna el turno x y vacia el h2 pra volver a jugar
+function jugarOtraVez(){
+    //Ponemos un temoporizador de 2seg para volver a jugar
+    setTimeout(() => {
+        //Vaciamos el resultado
+        resultado.innerHTML = "",
+
+        //Asignamos el turno
+        turno = "X",
+
+        //Vaciamos todas las celdas y sacamos el estilo ganador
+        celdas.forEach(celda => {
+            celda.innerHTML = "";
+            celda.classList.remove("ganador");
+        })
+    }, 2000);
 };
