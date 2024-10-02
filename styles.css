@@ -19,12 +19,6 @@ h2{
     min-height: 30px;
 }
 
-.botones{
-    display: flex;
-    justify-content: space-evenly;
-    padding: 20px;
-}
-
 table{
     width: 400px;
     height: 400px;
